@@ -106,5 +106,6 @@
   </dependencies>
   <modules>
   	<module>org.praxis.oauth.om</module>
+  	<module>org.praxis.oauth.api</module>
   </modules>
 </project>

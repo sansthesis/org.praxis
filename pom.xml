@@ -5,7 +5,7 @@
   <version>1-SNAPSHOT</version>
   <packaging>pom</packaging>
   
-  <name>Praxis :: Reactor</name>
+  <name>Praxis</name>
 
   <modules>
     <module>parent-pom</module>
