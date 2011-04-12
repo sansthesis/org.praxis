@@ -9,5 +9,6 @@
 
   <modules>
     <module>parent-pom</module>
+    <module>org.praxis.oauth</module>
   </modules>
 </project>
