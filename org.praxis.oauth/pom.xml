@@ -9,6 +9,7 @@
   <groupId>org.praxis.oauth</groupId>
   <artifactId>org.praxis.oauth</artifactId>
   <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
   
   <name>Praxis :: OAuth</name>
   <description>This package contains a simple OSGi service-backed OAuth endpoint.</description>
