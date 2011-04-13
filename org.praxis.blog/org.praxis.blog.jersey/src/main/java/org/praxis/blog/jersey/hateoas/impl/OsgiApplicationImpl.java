@@ -8,10 +8,10 @@ import javax.ws.rs.core.Application;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
+import org.praxis.blog.jersey.hateoas.ApplicationConfiguration;
 import org.praxis.blog.jersey.hateoas.BlogController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +22,11 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
 public class OsgiApplicationImpl extends Application {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @Property(label = "Application Alias", cardinality = 0, value = "/hateoas")
-  public static final String PROPERTY_APPLICATION_ALIAS = "application.alias";
-  private String alias;
-
   @Reference
   private HttpService httpService;
+
+  @Reference
+  private ApplicationConfiguration configuration;
 
   @Reference
   private BlogController blogController;
@@ -38,11 +37,9 @@ public class OsgiApplicationImpl extends Application {
   //  @Reference
   //  private StoryController storyController;
 
-  private JAXBContextResolver jaxbContextResolver;
+  private String alias;
 
-  public String getAlias() {
-    return alias;
-  }
+  private JAXBContextResolver jaxbContextResolver;
 
   @Override
   public Set<Object> getSingletons() {
@@ -56,17 +53,18 @@ public class OsgiApplicationImpl extends Application {
 
   @Activate
   protected void activate(final ComponentContext ctx) throws Exception {
-    alias = (String) ctx.getProperties().get(PROPERTY_APPLICATION_ALIAS);
-    log.debug("Starting Jersey API Application at '{}' with resources: {}.", getAlias(), getSingletons());
+    alias = configuration.getContextPath();
+    log.debug("Starting Jersey API Application at '{}' with resources: {}.", alias, getSingletons());
     final ServletContainer container = new ServletContainer(this);
     jaxbContextResolver = new JAXBContextResolver();
-    httpService.registerServlet(getAlias(), container, null, null);
+    httpService.registerServlet(alias, container, null, null);
   }
 
   @Deactivate
   protected void deactivate(final ComponentContext ctx) {
-    log.debug("Unbinding for context: {}.", getAlias());
+    log.debug("Unbinding for context: {}.", alias);
+    httpService.unregister(alias);
     alias = null;
-    httpService.unregister(getAlias());
+    jaxbContextResolver = null;
   }
 }

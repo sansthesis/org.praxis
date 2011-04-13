@@ -17,6 +17,13 @@ public class BlogDaoImpl extends AbstractDao<Blog> implements BlogDao {
   }
 
   @Override
+  public Blog get(final long id) {
+    final Blog entity = super.get(id);
+    entity.setTitle("Blog Title " + entity.getId());
+    return entity;
+  }
+
+  @Override
   public List<Blog> list() {
     final List<Blog> list = super.list();
     for( final Blog entity : list ) {

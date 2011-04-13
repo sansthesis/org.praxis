@@ -26,19 +26,16 @@ public class AbstractDao<E extends Entity> implements Dao<E> {
 
   @Override
   public E get(final long id) {
-    throw new UnsupportedOperationException();
+    final E entity = createEntity();
+    entity.setId(id);
+    return entity;
   }
 
   @Override
   public List<E> list() {
     final List<E> list = new ArrayList<E>();
     for( int i = 0; i < 5; i++ ) {
-      E entity;
-      try {
-        entity = entityClass.newInstance();
-      } catch( final Exception e ) {
-        throw new RuntimeException(e);
-      }
+      final E entity = createEntity();
       entity.setId(i);
       list.add(entity);
     }
@@ -48,6 +45,16 @@ public class AbstractDao<E extends Entity> implements Dao<E> {
   @Override
   public E update(final E entity) {
     throw new UnsupportedOperationException();
+  }
+
+  private E createEntity() {
+    E entity;
+    try {
+      entity = entityClass.newInstance();
+    } catch( final Exception e ) {
+      throw new RuntimeException(e);
+    }
+    return entity;
   }
 
 }
