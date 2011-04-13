@@ -1,4 +1,4 @@
-package org.praxis.blog.jersey.basic.impl;
+package org.praxis.blog.jersey.hateoas.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,9 +12,7 @@ import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
-import org.praxis.blog.jersey.basic.BlogController;
-import org.praxis.blog.jersey.basic.CommentController;
-import org.praxis.blog.jersey.basic.StoryController;
+import org.praxis.blog.jersey.hateoas.BlogController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +22,7 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
 public class OsgiApplicationImpl extends Application {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @Property(label = "Application Alias", cardinality = 0, value = "/basic")
+  @Property(label = "Application Alias", cardinality = 0, value = "/hateoas")
   public static final String PROPERTY_APPLICATION_ALIAS = "application.alias";
   private String alias;
 
@@ -34,11 +32,11 @@ public class OsgiApplicationImpl extends Application {
   @Reference
   private BlogController blogController;
 
-  @Reference
-  private CommentController commentController;
-
-  @Reference
-  private StoryController storyController;
+  //  @Reference
+  //  private CommentController commentController;
+  //
+  //  @Reference
+  //  private StoryController storyController;
 
   private JAXBContextResolver jaxbContextResolver;
 
@@ -50,8 +48,8 @@ public class OsgiApplicationImpl extends Application {
   public Set<Object> getSingletons() {
     final Set<Object> singletons = new HashSet<Object>();
     singletons.add(blogController);
-    singletons.add(commentController);
-    singletons.add(storyController);
+    //    singletons.add(commentController);
+    //    singletons.add(storyController);
     singletons.add(jaxbContextResolver);
     return singletons;
   }
