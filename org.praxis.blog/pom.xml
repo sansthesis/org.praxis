@@ -126,5 +126,6 @@
   	<module>org.praxis.blog.om</module>
   	<module>org.praxis.blog.dao</module>
   	<module>org.praxis.blog.jersey</module>
+  	<module>org.praxis.blog.feature</module>
   </modules>
 </project>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="praxis-blog-${project.version}">
+
+  <feature name="praxis-blog" version="${project.version}">
+    <bundle>mvn:${project.groupId}/${project.groupId}.om/${project.version}</bundle>
+    <bundle>mvn:${project.groupId}/${project.groupId}.dao/${project.version}</bundle>
+    <bundle>mvn:${project.groupId}/${project.groupId}.jersey/${project.version}</bundle>
+  </feature>
+</features>

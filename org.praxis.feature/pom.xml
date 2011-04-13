@@ -9,7 +9,6 @@
   <groupId>org.praxis.feature</groupId>
   <artifactId>org.praxis.feature</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-
   <packaging>pom</packaging>
 
   <name>Praxis :: Feature</name>
@@ -40,64 +39,26 @@
     <commons-lang.version>2.6</commons-lang.version>
     <commons-codec.version>1.4</commons-codec.version>
     <commons-httpclient.version>3.1</commons-httpclient.version>
+    <commons-pool.version>1.5.4_2</commons-pool.version>
+    <commons-dbcp.version>1.2.2_6</commons-dbcp.version>
 
     <org.apache.felix.eventadmin.version>1.2.10</org.apache.felix.eventadmin.version>
     <org.apache.servicemix.transaction.version>1.2.0</org.apache.servicemix.transaction.version>
     <org.apache.karaf.webconsole.version>2.2.0</org.apache.karaf.webconsole.version>
+
+    <openjpa.version>2.1.0</openjpa.version>
+    <javax.persistence.version>2.0.0</javax.persistence.version>
+    <serp.version>1.13.1</serp.version>
+    <javassist.version>3.10.0.GA</javassist.version>
+
+    <activation-api.version>1.7.0</activation-api.version>
+    <jaxb-api.version>1.7.0</jaxb-api.version>
+    <stax-api.version>1.7.0</stax-api.version>
+    <jaxb-impl.version>2.2.1.1_1</jaxb-impl.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.apache.karaf.webconsole</groupId>
-        <artifactId>org.apache.karaf.webconsole.admin</artifactId>
-        <version>${org.apache.karaf.webconsole.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.karaf.webconsole</groupId>
-        <artifactId>org.apache.karaf.webconsole.gogo</artifactId>
-        <version>${org.apache.karaf.webconsole.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.karaf.webconsole</groupId>
-        <artifactId>org.apache.karaf.webconsole.features</artifactId>
-        <version>${org.apache.karaf.webconsole.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.metatype</artifactId>
-        <version>${org.apache.felix.metatype.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.webconsole</artifactId>
-        <version>${org.apache.felix.webconsole.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.webconsole.plugins.event</artifactId>
-        <version>${org.apache.felix.webconsole.plugins.event.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.webconsole.plugins.memoryusage</artifactId>
-        <version>${org.apache.felix.webconsole.plugins.memoryusage.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.http.bundle</artifactId>
-        <version>${org.apache.felix.http.bundle.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.http.jetty</artifactId>
-        <version>${org.apache.felix.http.jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.http.whiteboard</artifactId>
-        <version>${org.apache.felix.http.whiteboard.version}</version>
-      </dependency>
       <dependency>
         <groupId>commons-collections</groupId>
         <artifactId>commons-collections</artifactId>
@@ -139,6 +100,106 @@
         <version>${org.apache.servicemix.transaction.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.metatype</artifactId>
+        <version>${org.apache.felix.metatype.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.http.bundle</artifactId>
+        <version>${org.apache.felix.http.bundle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.http.jetty</artifactId>
+        <version>${org.apache.felix.http.jetty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.http.whiteboard</artifactId>
+        <version>${org.apache.felix.http.whiteboard.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.webconsole</artifactId>
+        <version>${org.apache.felix.webconsole.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.webconsole.plugins.event</artifactId>
+        <version>${org.apache.felix.webconsole.plugins.event.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.webconsole.plugins.memoryusage</artifactId>
+        <version>${org.apache.felix.webconsole.plugins.memoryusage.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.karaf.webconsole</groupId>
+        <artifactId>org.apache.karaf.webconsole.admin</artifactId>
+        <version>${org.apache.karaf.webconsole.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.karaf.webconsole</groupId>
+        <artifactId>org.apache.karaf.webconsole.gogo</artifactId>
+        <version>${org.apache.karaf.webconsole.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.karaf.webconsole</groupId>
+        <artifactId>org.apache.karaf.webconsole.features</artifactId>
+        <version>${org.apache.karaf.webconsole.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.servicemix.specs</groupId>
+        <artifactId>org.apache.servicemix.specs.activation-api-1.1</artifactId>
+        <version>${activation-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.servicemix.specs</groupId>
+        <artifactId>org.apache.servicemix.specs.jaxb-api-2.2</artifactId>
+        <version>${jaxb-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.servicemix.specs</groupId>
+        <artifactId>org.apache.servicemix.specs.stax-api-1.0</artifactId>
+        <version>${stax-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.servicemix.bundles</groupId>
+        <artifactId>org.apache.servicemix.bundles.jaxb-impl</artifactId>
+        <version>${jaxb-impl.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.persistence</groupId>
+        <artifactId>com.springsource.javax.persistence</artifactId>
+        <version>${javax.persistence.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.servicemix.bundles</groupId>
+        <artifactId>org.apache.servicemix.bundles.commons-pool</artifactId>
+        <version>${commons-pool.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.servicemix.bundles</groupId>
+        <artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
+        <version>${commons-dbcp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sourceforge.serp</groupId>
+        <artifactId>com.springsource.serp</artifactId>
+        <version>${serp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.javassist</groupId>
+        <artifactId>com.springsource.javassist</artifactId>
+        <version>${javassist.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.openjpa</groupId>
+        <artifactId>openjpa</artifactId>
+        <version>${openjpa.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-mapper-asl</artifactId>
         <version>${jackson.version}</version>
@@ -178,46 +239,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.karaf.webconsole</groupId>
-      <artifactId>org.apache.karaf.webconsole.admin</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.karaf.webconsole</groupId>
-      <artifactId>org.apache.karaf.webconsole.gogo</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.karaf.webconsole</groupId>
-      <artifactId>org.apache.karaf.webconsole.features</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.metatype</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.webconsole</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.webconsole.plugins.event</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.webconsole.plugins.memoryusage</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.http.bundle</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.http.jetty</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.http.whiteboard</artifactId>
-    </dependency>
-    <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
     </dependency>
@@ -248,6 +269,86 @@
     <dependency>
       <groupId>org.apache.servicemix.transaction</groupId>
       <artifactId>org.apache.servicemix.transaction</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.metatype</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.http.bundle</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.http.jetty</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.http.whiteboard</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.webconsole</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.webconsole.plugins.event</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.webconsole.plugins.memoryusage</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.karaf.webconsole</groupId>
+      <artifactId>org.apache.karaf.webconsole.admin</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.karaf.webconsole</groupId>
+      <artifactId>org.apache.karaf.webconsole.gogo</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.karaf.webconsole</groupId>
+      <artifactId>org.apache.karaf.webconsole.features</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.servicemix.specs</groupId>
+      <artifactId>org.apache.servicemix.specs.activation-api-1.1</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.servicemix.specs</groupId>
+      <artifactId>org.apache.servicemix.specs.jaxb-api-2.2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.servicemix.specs</groupId>
+      <artifactId>org.apache.servicemix.specs.stax-api-1.0</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.servicemix.bundles</groupId>
+      <artifactId>org.apache.servicemix.bundles.jaxb-impl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.persistence</groupId>
+      <artifactId>com.springsource.javax.persistence</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.servicemix.bundles</groupId>
+      <artifactId>org.apache.servicemix.bundles.commons-pool</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.servicemix.bundles</groupId>
+      <artifactId>org.apache.servicemix.bundles.commons-dbcp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.serp</groupId>
+      <artifactId>com.springsource.serp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.javassist</groupId>
+      <artifactId>com.springsource.javassist</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.openjpa</groupId>
+      <artifactId>openjpa</artifactId>
     </dependency>
     <dependency>
       <groupId>org.codehaus.jackson</groupId>
