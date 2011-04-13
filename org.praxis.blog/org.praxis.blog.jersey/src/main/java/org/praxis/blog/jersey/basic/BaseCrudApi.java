@@ -1,4 +1,4 @@
-package org.praxis.blog.jersey;
+package org.praxis.blog.jersey.basic;
 
 import java.util.List;
 
@@ -9,18 +9,16 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.praxis.blog.Blog;
+import org.praxis.blog.Entity;
 
-public interface BlogController extends BaseCrudApi<Blog> {
-  @Override
+public interface BaseCrudApi<E extends Entity> {
   @Path("/{id}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  Blog get(@PathParam("id") long id);
+  E get(@PathParam("id") long id);
 
-  @Override
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  List<Blog> list();
+  List<E> list();
 }

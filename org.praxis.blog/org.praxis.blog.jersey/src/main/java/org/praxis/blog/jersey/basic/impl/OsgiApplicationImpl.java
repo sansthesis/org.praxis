@@ -1,4 +1,4 @@
-package org.praxis.blog.jersey.impl;
+package org.praxis.blog.jersey.basic.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,9 +12,10 @@ import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
-import org.praxis.blog.jersey.BlogController;
-import org.praxis.blog.jersey.CommentController;
-import org.praxis.blog.jersey.StoryController;
+import org.praxis.blog.jersey.basic.BlogController;
+import org.praxis.blog.jersey.basic.CommentController;
+import org.praxis.blog.jersey.basic.StoryController;
+import org.praxis.blog.jersey.impl.JAXBContextResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,7 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
 public class OsgiApplicationImpl extends Application {
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @Property(label = "Application Alias", cardinality = 0, value = "/api")
+  @Property(label = "Application Alias", cardinality = 0, value = "/basic")
   public static final String PROPERTY_APPLICATION_ALIAS = "application.alias";
   private String alias;
 

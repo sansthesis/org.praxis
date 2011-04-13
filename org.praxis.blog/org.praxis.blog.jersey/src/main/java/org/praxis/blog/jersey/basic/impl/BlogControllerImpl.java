@@ -1,4 +1,4 @@
-package org.praxis.blog.jersey.impl;
+package org.praxis.blog.jersey.basic.impl;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.praxis.blog.Blog;
 import org.praxis.blog.dao.BlogDao;
-import org.praxis.blog.jersey.BlogController;
+import org.praxis.blog.jersey.basic.BlogController;
 
 @Component(metatype = true, immediate = true)
 @Service
