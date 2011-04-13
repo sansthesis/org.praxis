@@ -11,5 +11,6 @@
     <module>parent-pom</module>
     <module>org.praxis.oauth</module>
     <module>org.praxis.blog</module>
+    <module>org.praxis.feature</module>
   </modules>
 </project>
