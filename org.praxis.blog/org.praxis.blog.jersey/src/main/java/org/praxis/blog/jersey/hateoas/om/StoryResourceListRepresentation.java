@@ -9,18 +9,19 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.praxis.blog.Blog;
+import org.praxis.blog.Comment;
 import org.praxis.blog.Story;
 import org.praxis.blog.jersey.hateoas.Link;
 
-@XmlRootElement(name = "blog")
-public class BlogResourceRepresentation extends Blog implements ResourceRepresentation {
+@XmlRootElement(name = "story")
+public class StoryResourceListRepresentation extends Story implements ResourceRepresentation {
   private List<Link> links = new ArrayList<Link>();
 
-  public BlogResourceRepresentation() {
+  public StoryResourceListRepresentation() {
     super();
   }
 
-  public BlogResourceRepresentation(final Blog entity) {
+  public StoryResourceListRepresentation(final Story entity) {
     this();
     try {
       BeanUtils.copyProperties(this, entity);
@@ -30,14 +31,26 @@ public class BlogResourceRepresentation extends Blog implements ResourceRepresen
   }
 
   @Override
-  public List<Link> getLinks() {
-    return links;
+  @XmlTransient
+  public Blog getBlog() {
+    return super.getBlog();
   }
 
   @Override
   @XmlTransient
-  public Set<Story> getStories() {
-    return super.getStories();
+  public Set<Comment> getComments() {
+    return super.getComments();
+  }
+
+  @Override
+  @XmlTransient
+  public Long getId() {
+    return super.getId();
+  }
+
+  @Override
+  public List<Link> getLinks() {
+    return links;
   }
 
   @Override

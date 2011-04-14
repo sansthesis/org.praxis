@@ -11,7 +11,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.praxis.blog.Blog;
 import org.praxis.blog.Story;
 import org.praxis.blog.jersey.hateoas.Link;
-import org.praxis.blog.jersey.hateoas.ResourceRepresentation;
 
 @XmlRootElement(name = "blog")
 public class BlogResourceListRepresentation extends Blog implements ResourceRepresentation {

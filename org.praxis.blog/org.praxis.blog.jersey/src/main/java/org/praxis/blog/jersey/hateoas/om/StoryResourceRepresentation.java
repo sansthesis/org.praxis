@@ -12,7 +12,6 @@ import org.praxis.blog.Blog;
 import org.praxis.blog.Comment;
 import org.praxis.blog.Story;
 import org.praxis.blog.jersey.hateoas.Link;
-import org.praxis.blog.jersey.hateoas.ResourceRepresentation;
 
 @XmlRootElement(name = "story")
 public class StoryResourceRepresentation extends Story implements ResourceRepresentation {

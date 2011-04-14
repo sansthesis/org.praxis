@@ -12,7 +12,7 @@ import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
-import org.praxis.blog.jersey.hateoas.BlogsResource;
+import org.praxis.blog.jersey.hateoas.resource.BlogsResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +30,6 @@ public class OsgiApplicationImpl extends Application {
 
   @Reference
   private BlogsResource blogsResource;
-
-  //  @Reference
-  //  private BlogResource blogResource;
 
   private String alias;
 

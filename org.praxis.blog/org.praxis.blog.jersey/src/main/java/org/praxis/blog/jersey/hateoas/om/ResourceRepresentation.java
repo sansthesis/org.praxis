@@ -1,6 +1,8 @@
-package org.praxis.blog.jersey.hateoas;
+package org.praxis.blog.jersey.hateoas.om;
 
 import java.util.List;
+
+import org.praxis.blog.jersey.hateoas.Link;
 
 public interface ResourceRepresentation {
 
