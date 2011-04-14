@@ -12,8 +12,7 @@ import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
-import org.praxis.blog.jersey.hateoas.BlogController;
-import org.praxis.blog.jersey.hateoas.StoryController;
+import org.praxis.blog.jersey.hateoas.BlogsResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,13 +29,10 @@ public class OsgiApplicationImpl extends Application {
   public static final String PROPERTY_APPLICATION_ALIAS = "application.alias";
 
   @Reference
-  private BlogController blogController;
+  private BlogsResource blogsResource;
 
-  // @Reference
-  // private CommentController commentController;
-
-  @Reference
-  private StoryController storyController;
+  //  @Reference
+  //  private BlogResource blogResource;
 
   private String alias;
 
@@ -45,9 +41,7 @@ public class OsgiApplicationImpl extends Application {
   @Override
   public Set<Object> getSingletons() {
     final Set<Object> singletons = new HashSet<Object>();
-    singletons.add(blogController);
-    // singletons.add(commentController);
-    singletons.add(storyController);
+    singletons.add(blogsResource);
     singletons.add(jaxbContextResolver);
     return singletons;
   }

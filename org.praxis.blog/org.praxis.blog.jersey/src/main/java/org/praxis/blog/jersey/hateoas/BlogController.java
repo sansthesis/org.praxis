@@ -2,14 +2,9 @@ package org.praxis.blog.jersey.hateoas;
 
 import java.util.List;
 
-import org.praxis.blog.Blog;
+import org.praxis.blog.jersey.hateoas.om.BlogResourceRepresentation;
+import org.praxis.blog.jersey.hateoas.om.StoryResourceRepresentation;
 
-public interface BlogController extends BaseCrudApi<BlogResource, Blog> {
-  @Override
-  BlogResource get(long id);
-
-  @Override
-  List<BlogResource> list();
-
-  List<StoryResource> listStories(long blogId);
+public interface BlogController extends BaseCrudApi<BlogResourceRepresentation> {
+  List<StoryResourceRepresentation> listStories(long blogId);
 }

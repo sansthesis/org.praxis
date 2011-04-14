@@ -1,5 +1,5 @@
 package org.praxis.blog.jersey.hateoas;
 
-public interface BlogResource {
+public interface BlogsResource {
 
 }

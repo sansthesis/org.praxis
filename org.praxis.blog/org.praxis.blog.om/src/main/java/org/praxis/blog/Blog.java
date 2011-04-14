@@ -13,14 +13,19 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 @Entity
 @XmlRootElement
 public class Blog implements org.praxis.blog.Entity {
-  private long id;
+  private Long id;
   private String title;
+  private String description;
   private Set<Story> stories = new HashSet<Story>();
+
+  public String getDescription() {
+    return description;
+  }
 
   @Override
   @Id
   @GeneratedValue
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
@@ -32,8 +37,12 @@ public class Blog implements org.praxis.blog.Entity {
     return title;
   }
 
+  public void setDescription(final String description) {
+    this.description = description;
+  }
+
   @Override
-  public void setId(final long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 

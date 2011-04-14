@@ -2,8 +2,8 @@ package org.praxis.blog;
 
 public interface Entity {
 
-  long getId();
+  Long getId();
 
-  void setId(long id);
+  void setId(Long id);
 
 }

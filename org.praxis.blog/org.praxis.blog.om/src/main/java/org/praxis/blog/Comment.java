@@ -13,7 +13,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 @XmlRootElement
 public class Comment implements org.praxis.blog.Entity {
 
-  private long id;
+  private Long id;
   private String author;
   private String body;
   private Date date;
@@ -35,7 +35,7 @@ public class Comment implements org.praxis.blog.Entity {
   @Override
   @Id
   @GeneratedValue
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
@@ -60,7 +60,7 @@ public class Comment implements org.praxis.blog.Entity {
   }
 
   @Override
-  public void setId(final long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 

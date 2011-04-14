@@ -17,7 +17,7 @@ import org.praxis.blog.dao.StoryDao;
 import org.praxis.blog.jersey.hateoas.AbstractController;
 import org.praxis.blog.jersey.hateoas.Link;
 import org.praxis.blog.jersey.hateoas.StoryController;
-import org.praxis.blog.jersey.hateoas.StoryResource;
+import org.praxis.blog.jersey.hateoas.om.StoryResourceRepresentation;
 
 @Component(metatype = true, immediate = true)
 @Service
@@ -31,26 +31,26 @@ public class StoryControllerImpl extends AbstractController implements StoryCont
   private StoryDao storyDao;
 
   @Override
-  public StoryResource get(final long id) {
+  public StoryResourceRepresentation get(final long id) {
     return wrap(storyDao.get(id));
   }
 
   @Override
-  public List<StoryResource> list() {
+  public List<StoryResourceRepresentation> list() {
     return wrap(storyDao.list());
   }
 
-  private List<StoryResource> wrap(final List<Story> list) {
-    final List<StoryResource> output = new ArrayList<StoryResource>();
+  private List<StoryResourceRepresentation> wrap(final List<Story> list) {
+    final List<StoryResourceRepresentation> output = new ArrayList<StoryResourceRepresentation>();
     for( final Story entity : list ) {
       output.add(wrap(entity));
     }
     return output;
   }
 
-  private StoryResource wrap(final Story entity) {
+  private StoryResourceRepresentation wrap(final Story entity) {
     final UriBuilder baseBuilder = uriInfo.getBaseUriBuilder();
-    final StoryResource resource = new StoryResource(entity);
+    final StoryResourceRepresentation resource = new StoryResourceRepresentation(entity);
     final Link self = new Link(baseBuilder.path(getClass()).path("{id}").build(entity.getId()).toString(), "self", "application/json");
     Collections.addAll(resource.getLinks(), self);
     return resource;

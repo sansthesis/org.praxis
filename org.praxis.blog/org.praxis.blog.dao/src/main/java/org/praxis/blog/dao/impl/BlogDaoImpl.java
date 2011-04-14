@@ -20,6 +20,7 @@ public class BlogDaoImpl extends AbstractDao<Blog> implements BlogDao {
   public Blog get(final long id) {
     final Blog entity = super.get(id);
     entity.setTitle("Blog Title " + entity.getId());
+    entity.setDescription("Blog description " + entity.getId());
     return entity;
   }
 
@@ -28,6 +29,7 @@ public class BlogDaoImpl extends AbstractDao<Blog> implements BlogDao {
     final List<Blog> list = super.list();
     for( final Blog entity : list ) {
       entity.setTitle("Blog Title " + entity.getId());
+      entity.setDescription("Blog description " + entity.getId());
     }
     return list;
   }

@@ -9,9 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.praxis.blog.Entity;
-
-public interface BaseCrudApi<E extends EntityResource<T>, T extends Entity> {
+public interface BaseCrudApi<E extends ResourceRepresentation> {
   @Path("/{id}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)

@@ -2,7 +2,7 @@ package org.praxis.blog.jersey.hateoas;
 
 import java.util.List;
 
-public interface Resource {
+public interface ResourceRepresentation {
 
   List<Link> getLinks();
 

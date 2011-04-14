@@ -34,7 +34,7 @@ public abstract class AbstractDao<E extends Entity> implements Dao<E> {
   @Override
   public List<E> list() {
     final List<E> list = new ArrayList<E>();
-    for( int i = 0; i < 5; i++ ) {
+    for( long i = 0; i < 5; i++ ) {
       final E entity = createEntity();
       entity.setId(i);
       list.add(entity);
@@ -56,7 +56,7 @@ public abstract class AbstractDao<E extends Entity> implements Dao<E> {
     E entity;
     try {
       entity = entityClass.newInstance();
-    } catch (final Exception e) {
+    } catch( final Exception e ) {
       throw new RuntimeException(e);
     }
     return entity;

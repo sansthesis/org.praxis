@@ -9,18 +9,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.praxis.blog.Story;
+import org.praxis.blog.jersey.hateoas.om.StoryResourceRepresentation;
 
-public interface StoryController extends BaseCrudApi<StoryResource, Story> {
+public interface StoryController extends BaseCrudApi<StoryResourceRepresentation> {
   @Override
   @Path("/{id}")
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  StoryResource get(@PathParam("id") long id);
+  StoryResourceRepresentation get(@PathParam("id") long id);
 
   @Override
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  List<StoryResource> list();
+  List<StoryResourceRepresentation> list();
 }

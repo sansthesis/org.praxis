@@ -15,7 +15,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 @XmlRootElement
 public class Story implements org.praxis.blog.Entity {
 
-  private long id;
+  private Long id;
   private String title;
   private String story;
   private Date date;
@@ -42,7 +42,7 @@ public class Story implements org.praxis.blog.Entity {
   @Override
   @Id
   @GeneratedValue
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
@@ -71,7 +71,7 @@ public class Story implements org.praxis.blog.Entity {
   }
 
   @Override
-  public void setId(final long id) {
+  public void setId(final Long id) {
     this.id = id;
   }
 

@@ -13,7 +13,7 @@ public abstract class AbstractController {
   protected Method getMethod(final Class<?> clazz, final String methodName, final Class<?>... parameterTypes) {
     try {
       return clazz.getMethod(methodName, parameterTypes);
-    } catch (final Exception e) {
+    } catch( final Exception e ) {
       throw new RuntimeException(e);
     }
   }

@@ -2,21 +2,37 @@ package org.praxis.blog.jersey.hateoas;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 @XmlRootElement
 public class Link {
-  private String uri;
+  private String href;
   private String rel;
   private String type;
+  private String charset;
 
   public Link() {
     super();
   }
 
-  public Link(final String uri, final String rel, final String type) {
+  public Link(final String href, final String rel, final String type) {
     this();
-    this.uri = uri;
+    this.href = href;
     this.rel = rel;
     this.type = type;
+  }
+
+  public Link(final String href, final String rel, final String type, final String charset) {
+    this(href, rel, type);
+    this.charset = charset;
+  }
+
+  public String getCharset() {
+    return charset;
+  }
+
+  public String getHref() {
+    return href;
   }
 
   public String getRel() {
@@ -27,8 +43,12 @@ public class Link {
     return type;
   }
 
-  public String getUri() {
-    return uri;
+  public void setCharset(final String charset) {
+    this.charset = charset;
+  }
+
+  public void setHref(final String href) {
+    this.href = href;
   }
 
   public void setRel(final String rel) {
@@ -39,7 +59,8 @@ public class Link {
     this.type = type;
   }
 
-  public void setUri(final String uri) {
-    this.uri = uri;
+  @Override
+  public String toString() {
+    return new ReflectionToStringBuilder(this).toString();
   }
 }
