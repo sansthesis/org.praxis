@@ -1,15 +1,11 @@
 package org.praxis.blog.jersey.hateoas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.praxis.blog.Blog;
 
 @XmlRootElement
-public class BlogResource implements EntityResource<Blog> {
-  private List<Link> links = new ArrayList<Link>();
+public class BlogResource extends AbstractResource implements EntityResource<Blog> {
   private StoryResource stories;
   private Blog entity;
 
@@ -22,28 +18,8 @@ public class BlogResource implements EntityResource<Blog> {
     this.entity = entity;
   }
 
-  @Override
-  public List<Link> getLinks() {
-    return links;
-  }
-
-  @Override
-  public void setLinks(final List<Link> links) {
-    this.links = links;
-  }
-
-  @Override
-  public EntityResource<Blog> wrap(final Blog entity) {
-    return new BlogResource(entity);
-  }
-
-  @Override
-  public Blog unwrap() {
-    return entity;
-  }
-
-  public void setTitle(final String title) {
-    entity.setTitle(title);
+  public StoryResource getStories() {
+    return stories;
   }
 
   public String getTitle() {
@@ -54,8 +30,18 @@ public class BlogResource implements EntityResource<Blog> {
     this.stories = stories;
   }
 
-  public StoryResource getStories() {
-    return stories;
+  public void setTitle(final String title) {
+    entity.setTitle(title);
+  }
+
+  @Override
+  public Blog unwrap() {
+    return entity;
+  }
+
+  @Override
+  public EntityResource<Blog> wrap(final Blog entity) {
+    return new BlogResource(entity);
   }
 
 }

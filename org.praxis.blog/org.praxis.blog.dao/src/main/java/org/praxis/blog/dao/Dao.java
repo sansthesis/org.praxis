@@ -14,5 +14,7 @@ public interface Dao<E extends Entity> {
 
   List<E> list();
 
+  List<E> listByRelation(String relationName, long relationId);
+
   E update(E entity);
 }

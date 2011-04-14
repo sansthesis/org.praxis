@@ -8,11 +8,12 @@ import javax.ws.rs.core.Application;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
+import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
-import org.praxis.blog.jersey.hateoas.ApplicationConfiguration;
 import org.praxis.blog.jersey.hateoas.BlogController;
+import org.praxis.blog.jersey.hateoas.StoryController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,17 +26,17 @@ public class OsgiApplicationImpl extends Application {
   @Reference
   private HttpService httpService;
 
-  @Reference
-  private ApplicationConfiguration configuration;
+  @Property(label = "Application Alias", value = "/hateoas")
+  public static final String PROPERTY_APPLICATION_ALIAS = "application.alias";
 
   @Reference
   private BlogController blogController;
 
-  //  @Reference
-  //  private CommentController commentController;
-  //
-  //  @Reference
-  //  private StoryController storyController;
+  // @Reference
+  // private CommentController commentController;
+
+  @Reference
+  private StoryController storyController;
 
   private String alias;
 
@@ -45,21 +46,29 @@ public class OsgiApplicationImpl extends Application {
   public Set<Object> getSingletons() {
     final Set<Object> singletons = new HashSet<Object>();
     singletons.add(blogController);
-    //    singletons.add(commentController);
-    //    singletons.add(storyController);
+    // singletons.add(commentController);
+    singletons.add(storyController);
     singletons.add(jaxbContextResolver);
     return singletons;
   }
 
+  /**
+   * Activates the component.
+   * @param ctx The ComponentContext at the time of activation.
+   */
   @Activate
   protected void activate(final ComponentContext ctx) throws Exception {
-    alias = configuration.getContextPath();
+    alias = (String) ctx.getProperties().get(PROPERTY_APPLICATION_ALIAS);
     log.debug("Starting Jersey API Application at '{}' with resources: {}.", alias, getSingletons());
     final ServletContainer container = new ServletContainer(this);
     jaxbContextResolver = new JAXBContextResolver();
     httpService.registerServlet(alias, container, null, null);
   }
 
+  /**
+   * Deactivates the component.
+   * @param ctx The ComponentContext at the time of deactivation.
+   */
   @Deactivate
   protected void deactivate(final ComponentContext ctx) {
     log.debug("Unbinding for context: {}.", alias);

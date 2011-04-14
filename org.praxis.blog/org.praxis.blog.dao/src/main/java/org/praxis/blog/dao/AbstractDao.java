@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component(componentAbstract = true)
-public class AbstractDao<E extends Entity> implements Dao<E> {
+public abstract class AbstractDao<E extends Entity> implements Dao<E> {
   protected final Logger log = LoggerFactory.getLogger(getClass());
 
   protected Class<E> entityClass;
@@ -43,6 +43,11 @@ public class AbstractDao<E extends Entity> implements Dao<E> {
   }
 
   @Override
+  public List<E> listByRelation(final String relationName, final long relationId) {
+    return list();
+  }
+
+  @Override
   public E update(final E entity) {
     throw new UnsupportedOperationException();
   }
@@ -51,7 +56,7 @@ public class AbstractDao<E extends Entity> implements Dao<E> {
     E entity;
     try {
       entity = entityClass.newInstance();
-    } catch( final Exception e ) {
+    } catch (final Exception e) {
       throw new RuntimeException(e);
     }
     return entity;
