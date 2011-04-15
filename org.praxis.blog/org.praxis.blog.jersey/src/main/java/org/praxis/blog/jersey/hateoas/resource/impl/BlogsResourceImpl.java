@@ -44,6 +44,7 @@ public class BlogsResourceImpl extends AbstractController implements BlogsResour
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @Override
   public List<BlogResourceListRepresentation> list() {
     return wrap(blogDao.list());
   }

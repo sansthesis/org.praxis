@@ -1,4 +1,4 @@
-package org.praxis.blog.jersey.hateoas;
+package org.praxis.blog.jersey.jackson;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

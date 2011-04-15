@@ -1,4 +1,4 @@
-package org.praxis.blog.jersey.hateoas.impl;
+package org.praxis.blog.jersey.jackson.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,11 +10,10 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
-import org.praxis.blog.jersey.hateoas.resource.BlogsResource;
-import org.praxis.blog.jersey.hateoas.resource.CommentsResource;
-import org.praxis.blog.jersey.hateoas.resource.StoriesResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,34 +30,26 @@ public class OsgiApplicationImpl extends Application {
   /**
    * This is the servlet path that Jersey will register its context under.
    */
-  @Property(label = "Application Alias", value = "/hateoas")
+  @Property(label = "Application Alias", value = "/jackson")
   public static final String PROPERTY_APPLICATION_ALIAS = "application.alias";
 
   private String alias;
 
   @Reference
-  private BlogsResource blogsResource;
-
-  @Reference
-  private CommentsResource commentsResource;
-
-  @Reference
   private HttpService httpService;
-
-  private JAXBContextResolver jaxbContextResolver;
 
   private final Logger log = LoggerFactory.getLogger(getClass());
 
   @Reference
-  private StoriesResource storiesResource;
+  private TestResource testResource;
 
   @Override
   public Set<Object> getSingletons() {
+    final ObjectMapper mapper = new ObjectMapper();
+    final JacksonJsonProvider provider = new JacksonJsonProvider(mapper);
     final Set<Object> singletons = new HashSet<Object>();
-    singletons.add(blogsResource);
-    singletons.add(storiesResource);
-    singletons.add(commentsResource);
-    singletons.add(jaxbContextResolver);
+    singletons.add(testResource);
+    singletons.add(provider);
     return singletons;
   }
 
@@ -71,7 +62,6 @@ public class OsgiApplicationImpl extends Application {
     alias = (String) ctx.getProperties().get(PROPERTY_APPLICATION_ALIAS);
     log.debug("Starting Jersey API Application at '{}' with resources: {}.", alias, getSingletons());
     final ServletContainer container = new ServletContainer(this);
-    jaxbContextResolver = new JAXBContextResolver();
     httpService.registerServlet(alias, container, null, null);
   }
 
@@ -84,6 +74,5 @@ public class OsgiApplicationImpl extends Application {
     log.debug("Unbinding from context: {}.", alias);
     httpService.unregister(alias);
     alias = null;
-    jaxbContextResolver = null;
   }
 }

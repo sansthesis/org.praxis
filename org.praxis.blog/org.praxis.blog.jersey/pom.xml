@@ -5,10 +5,10 @@
     <groupId>org.praxis.blog</groupId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  
+
   <artifactId>org.praxis.blog.jersey</artifactId>
   <packaging>bundle</packaging>
-  
+
   <name>Praxis :: Blog :: Jersey Endpoints</name>
 
   <dependencies>
@@ -23,13 +23,13 @@
       <artifactId>${project.groupId}.dao</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
+
     <!-- Commons -->
     <dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
     </dependency>
-    
+
     <!-- Jersey -->
     <dependency>
       <groupId>com.sun.jersey</groupId>
@@ -43,7 +43,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
     </dependency>
-    
+
     <!-- OSGi -->
     <dependency>
       <groupId>org.apache.felix</groupId>
