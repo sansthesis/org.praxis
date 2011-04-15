@@ -1,6 +1,6 @@
 package org.praxis.blog.dao.impl;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.felix.scr.annotations.Component;
@@ -19,21 +19,17 @@ public class StoryDaoImpl extends AbstractDao<Story> implements StoryDao {
   }
 
   @Override
-  public Story get(final long id) {
-    final Story entity = super.get(id);
-    entity.setTitle("Story Title " + entity.getId());
-    entity.setStory("This is the story.");
-    entity.setDate(new Date());
-    return entity;
-  }
-
-  @Override
-  public List<Story> list() {
-    final List<Story> list = super.list();
-    for( final Story entity : list ) {
-      entity.setDate(new Date());
-      entity.setStory("This is the story.");
-      entity.setTitle("Story Title " + entity.getId());
+  public List<Story> listByRelation(final String relationName, final long relationId) {
+    final List<Story> all = list();
+    final List<Story> list = new ArrayList<Story>();
+    if( "blog".equals(relationName) ) {
+      for( final Story entity : all ) {
+        if( entity.getBlog().getId() == relationId ) {
+          list.add(entity);
+        }
+      }
+    } else {
+      throw new UnsupportedOperationException();
     }
     return list;
   }

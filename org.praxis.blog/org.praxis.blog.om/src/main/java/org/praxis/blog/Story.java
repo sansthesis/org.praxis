@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
@@ -23,10 +24,12 @@ public class Story implements org.praxis.blog.Entity {
   private Set<Comment> comments = new HashSet<Comment>();
   private Blog blog;
 
+  @XmlTransient
   public Blog getBlog() {
     return blog;
   }
 
+  @XmlTransient
   public Set<Comment> getComments() {
     return comments;
   }

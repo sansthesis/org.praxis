@@ -37,6 +37,7 @@ public class BlogsResourceImpl extends AbstractController implements BlogsResour
   private BlogResource blogResource;
 
   @Path("/{blogId: [0-9]+}")
+  @Override
   public BlogResource get() {
     return blogResource;
   }

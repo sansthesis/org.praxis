@@ -7,6 +7,8 @@ import javax.xml.bind.JAXBContext;
 import org.praxis.blog.jersey.hateoas.Link;
 import org.praxis.blog.jersey.hateoas.om.BlogResourceListRepresentation;
 import org.praxis.blog.jersey.hateoas.om.BlogResourceRepresentation;
+import org.praxis.blog.jersey.hateoas.om.CommentResourceListRepresentation;
+import org.praxis.blog.jersey.hateoas.om.CommentResourceRepresentation;
 import org.praxis.blog.jersey.hateoas.om.StoryResourceListRepresentation;
 import org.praxis.blog.jersey.hateoas.om.StoryResourceRepresentation;
 
@@ -17,7 +19,7 @@ import com.sun.jersey.api.json.JSONJAXBContext;
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
   private final JAXBContext context;
-  private final Class<?>[] types = { BlogResourceRepresentation.class, BlogResourceListRepresentation.class, StoryResourceListRepresentation.class, StoryResourceRepresentation.class, Link.class };
+  private final Class<?>[] types = { CommentResourceListRepresentation.class, CommentResourceRepresentation.class, BlogResourceRepresentation.class, BlogResourceListRepresentation.class, StoryResourceListRepresentation.class, StoryResourceRepresentation.class, Link.class };
 
   public JAXBContextResolver() throws Exception {
     this.context = new JSONJAXBContext(JSONConfiguration.natural().rootUnwrapping(true).build(), types);

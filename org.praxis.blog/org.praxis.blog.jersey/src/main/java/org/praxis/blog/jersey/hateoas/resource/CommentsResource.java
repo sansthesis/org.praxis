@@ -10,14 +10,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
-import org.praxis.blog.jersey.hateoas.om.StoryResourceListRepresentation;
+import org.praxis.blog.jersey.hateoas.om.CommentResourceListRepresentation;
 
-public interface StoriesResource {
+public interface CommentsResource {
 
-  @Path("/{storyId: [0-9]+}")
-  StoryResource get();
+  @Path("/{commentId: [0-9]+}")
+  CommentResource get();
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  List<StoryResourceListRepresentation> list(@PathParam("blogId") long blogId, @Context UriInfo uriInfo);
+  List<CommentResourceListRepresentation> list(@PathParam("storyId") long storyId, @Context UriInfo uriInfo);
 }

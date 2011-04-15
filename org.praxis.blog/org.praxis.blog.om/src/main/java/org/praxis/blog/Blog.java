@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
@@ -29,6 +30,7 @@ public class Blog implements org.praxis.blog.Entity {
     return id;
   }
 
+  @XmlTransient
   public Set<Story> getStories() {
     return stories;
   }

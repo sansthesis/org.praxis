@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -33,17 +34,16 @@ public class StoriesResourceImpl extends AbstractController implements StoriesRe
   private StoryResource storyResource;
 
   @Override
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public List<StoryResourceListRepresentation> list(@Context final UriInfo uriInfo) {
-    return wrap(storyDao.list(), uriInfo);
+  @Path("/{storyId: [0-9]+}")
+  public StoryResource get() {
+    return storyResource;
   }
 
-  private StoryResourceListRepresentation wrap(final Story entity, final UriInfo uriInfo) {
-    final StoryResourceListRepresentation resource = new StoryResourceListRepresentation(entity);
-    final Link self = new Link(uriInfo.getRequestUriBuilder().path(getClass(), "get").build(entity.getId()).toString(), "self", "application/json");
-    Collections.addAll(resource.getLinks(), self);
-    return resource;
+  @Override
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<StoryResourceListRepresentation> list(@PathParam("blogId") final long blogId, @Context final UriInfo uriInfo) {
+    return wrap(storyDao.listByRelation("blog", blogId), uriInfo);
   }
 
   private List<StoryResourceListRepresentation> wrap(final List<Story> list, final UriInfo uriInfo) {
@@ -54,9 +54,10 @@ public class StoriesResourceImpl extends AbstractController implements StoriesRe
     return output;
   }
 
-  @Override
-  @Path("/{storyId: [0-9]+}")
-  public StoryResource get() {
-    return storyResource;
+  private StoryResourceListRepresentation wrap(final Story entity, final UriInfo uriInfo) {
+    final StoryResourceListRepresentation resource = new StoryResourceListRepresentation(entity);
+    final Link self = new Link(uriInfo.getRequestUriBuilder().path(getClass(), "get").build(entity.getId()).toString(), "self", "application/json");
+    Collections.addAll(resource.getLinks(), self);
+    return resource;
   }
 }

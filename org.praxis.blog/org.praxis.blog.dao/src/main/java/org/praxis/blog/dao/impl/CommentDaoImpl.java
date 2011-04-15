@@ -1,6 +1,6 @@
 package org.praxis.blog.dao.impl;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.felix.scr.annotations.Component;
@@ -19,13 +19,17 @@ public class CommentDaoImpl extends AbstractDao<Comment> implements CommentDao {
   }
 
   @Override
-  public List<Comment> list() {
-    final List<Comment> list = super.list();
-    for( final Comment entity : list ) {
-      entity.setAuthor("Author " + entity.getId());
-      entity.setBody("This is the comment body.");
-      entity.setDate(new Date());
-      entity.setSubject("Comment " + entity.getId());
+  public List<Comment> listByRelation(final String relationName, final long relationId) {
+    final List<Comment> all = list();
+    final List<Comment> list = new ArrayList<Comment>();
+    if( "story".equals(relationName) ) {
+      for( final Comment entity : all ) {
+        if( entity.getStory().getId() == relationId ) {
+          list.add(entity);
+        }
+      }
+    } else {
+      throw new UnsupportedOperationException();
     }
     return list;
   }
