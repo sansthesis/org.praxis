@@ -10,10 +10,9 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
-import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
+import org.praxis.blog.jersey.jackson.JacksonProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +37,9 @@ public class OsgiApplicationImpl extends Application {
   @Reference
   private HttpService httpService;
 
+  @Reference
+  private JacksonProvider jacksonProvider;
+
   private final Logger log = LoggerFactory.getLogger(getClass());
 
   @Reference
@@ -45,11 +47,9 @@ public class OsgiApplicationImpl extends Application {
 
   @Override
   public Set<Object> getSingletons() {
-    final ObjectMapper mapper = new ObjectMapper();
-    final JacksonJsonProvider provider = new JacksonJsonProvider(mapper);
     final Set<Object> singletons = new HashSet<Object>();
     singletons.add(testResource);
-    singletons.add(provider);
+    singletons.add(jacksonProvider.getJacksonJsonProvider());
     return singletons;
   }
 
