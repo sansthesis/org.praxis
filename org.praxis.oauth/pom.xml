@@ -4,6 +4,7 @@
     <artifactId>praxis-parent-pom</artifactId>
     <groupId>org.praxis</groupId>
     <version>1-SNAPSHOT</version>
+    <relativePath>../parent-pom/pom.xml</relativePath>
   </parent>
   
   <groupId>org.praxis.oauth</groupId>
