@@ -12,5 +12,6 @@
     <module>org.praxis.oauth</module>
     <module>org.praxis.blog</module>
     <module>org.praxis.feature</module>
+    <module>org.praxis.jersey</module>
   </modules>
 </project>
