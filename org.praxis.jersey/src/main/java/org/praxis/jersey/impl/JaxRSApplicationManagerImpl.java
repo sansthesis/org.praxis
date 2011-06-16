@@ -5,15 +5,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Reference;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.ComponentContext;
+import org.apache.felix.scr.annotations.ReferenceCardinality;
+import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.osgi.service.http.HttpService;
-import org.osgi.util.tracker.ServiceTracker;
 import org.praxis.jersey.JaxRSApplicationManager;
 import org.praxis.jersey.JaxRSResource;
 import org.praxis.jersey.JaxRSResourceConstants;
@@ -28,6 +25,7 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
  */
 
 @Component(immediate = true, metatype = true)
+@Reference(target = "(&(!(jaxrs.ignore.resource=true))(jaxrs.application.path=*))", cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, policy = ReferencePolicy.DYNAMIC, bind = "bindResource", unbind = "unbindResource", referenceInterface = JaxRSResource.class)
 public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
 
   private final Map<String, Set<JaxRSResource>> resourceMap = new HashMap<String, Set<JaxRSResource>>();
@@ -36,8 +34,6 @@ public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
   private HttpService httpService;
 
   private final Logger log = LoggerFactory.getLogger(getClass());
-
-  private ServiceTracker tracker;
 
   public JaxRSApplicationManagerImpl() {
     super();
@@ -49,11 +45,10 @@ public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
   }
 
   @Override
-  public void bindResource(final JaxRSResource resource, final ServiceReference reference) {
-    log.debug("Binding Resource: {}", resource);
-
+  public void bindResource(final JaxRSResource resource, final Map<String, ?> map) {
+    log.info("Binding service: {}, {}", resource, map);
     // Get application path.
-    final String path = reference.getProperty(JaxRSResourceConstants.PROPERTY_APPLICATION_PATH).toString();
+    final String path = map.get(JaxRSResourceConstants.PROPERTY_APPLICATION_PATH).toString();
     log.debug("Path: {}", path);
 
     // Add resource to that Application's context.
@@ -65,11 +60,10 @@ public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
   }
 
   @Override
-  public void unbindResource(final JaxRSResource resource, final ServiceReference reference) {
-    log.debug("Unbinding Resource: {}", resource);
-
+  public void unbindResource(final JaxRSResource resource, final Map<String, ?> map) {
+    log.info("Unbinding service: {}, {}", resource, map);
     // Get application path.
-    final String path = reference.getProperty(JaxRSResourceConstants.PROPERTY_APPLICATION_PATH).toString();
+    final String path = map.get(JaxRSResourceConstants.PROPERTY_APPLICATION_PATH).toString();
     log.debug("Path: {}", path);
 
     // Remove resource from that Application's context.
@@ -80,19 +74,9 @@ public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
     if( !resources.isEmpty() ) {
       refreshJerseyApplication(path, resources);
     } else {
+      unbindContext(path);
       resourceMap.remove(path);
     }
-  }
-
-  /**
-   * Activates the component.
-   */
-  @Activate
-  protected void activate(final ComponentContext ctx) throws Exception {
-    log.debug("Activating.");
-    final BundleContext bundleContext = ctx.getBundleContext();
-    tracker = new ServiceTracker(bundleContext, bundleContext.createFilter(String.format("(&(objectClass=%s)(!(%s=true))(%s=*))", JaxRSResource.class.getName(), JaxRSResourceConstants.PROPERTY_IGNORE_RESOURCE, JaxRSResourceConstants.PROPERTY_APPLICATION_PATH)), new JaxRSResourceServiceTrackerCustomizer(bundleContext, this));
-    tracker.open();
   }
 
   /**
@@ -101,7 +85,6 @@ public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
   @Deactivate
   protected void deactivate() {
     log.debug("Deactivating.");
-    tracker.close();
     for( final String path : resourceMap.keySet() ) {
       unbindContext(path);
     }
@@ -133,7 +116,7 @@ public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
       final JaxRSApplicationImpl application = new JaxRSApplicationImpl(path, httpService.createDefaultHttpContext(), resources, null);
       final ServletContainer container = new ServletContainer(application);
       httpService.registerServlet(path, container, application.getInitParams(), application.getHttpContext());
-    } catch( final Exception e ) {
+    } catch (final Exception e) {
       log.warn("Unable to refresh Jersey application at path " + path + ".", e);
     }
   }
@@ -145,9 +128,9 @@ public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
   private void unbindContext(final String path) {
     try {
       httpService.unregister(path);
-    } catch( final IllegalArgumentException iae ) {
+    } catch (final IllegalArgumentException iae) {
       log.debug("Unable to unbind path " + path + ".", iae);
-    } catch( final Exception e ) {
+    } catch (final Exception e) {
       log.warn("Unable to unbind path " + path + ".", e);
     }
   }
