@@ -14,10 +14,10 @@ import org.praxis.jersey.JaxRSResource;
  * @author Jason Rose
  */
 public class JaxRSApplicationImpl extends Application implements JaxRSApplication {
-  private String path;
-  private HttpContext httpContext;
-  private Set<JaxRSResource> resources;
-  private Dictionary<String, String> initParams;
+  private final String path;
+  private final HttpContext httpContext;
+  private final Set<JaxRSResource> resources;
+  private final Dictionary<String, String> initParams;
 
   public JaxRSApplicationImpl(final String path, final HttpContext httpContext, final Set<JaxRSResource> resources, final Dictionary<String, String> initParams) {
     super();
@@ -51,22 +51,6 @@ public class JaxRSApplicationImpl extends Application implements JaxRSApplicatio
   @Override
   public Set<Object> getSingletons() {
     return (Set<Object>) (Set<?>) getResources();
-  }
-
-  public void setHttpContext(final HttpContext httpContext) {
-    this.httpContext = httpContext;
-  }
-
-  public void setInitParams(final Dictionary<String, String> initParams) {
-    this.initParams = initParams;
-  }
-
-  public void setPath(final String path) {
-    this.path = path;
-  }
-
-  public void setResources(final Set<JaxRSResource> resources) {
-    this.resources = resources;
   }
 
 }

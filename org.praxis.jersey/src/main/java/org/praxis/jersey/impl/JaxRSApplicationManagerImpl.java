@@ -14,6 +14,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
 import org.osgi.util.tracker.ServiceTracker;
+import org.praxis.jersey.JaxRSApplicationManager;
 import org.praxis.jersey.JaxRSResource;
 import org.praxis.jersey.JaxRSResourceConstants;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ import com.sun.jersey.spi.container.servlet.ServletContainer;
  */
 
 @Component(immediate = true, metatype = true)
-public class JaxRSApplicationManagerImpl {
+public class JaxRSApplicationManagerImpl implements JaxRSApplicationManager {
 
   private final Map<String, Set<JaxRSResource>> resourceMap = new HashMap<String, Set<JaxRSResource>>();
 
@@ -47,23 +48,8 @@ public class JaxRSApplicationManagerImpl {
     this.httpService = httpService;
   }
 
-  /**
-   * Activates the component.
-   */
-  @Activate
-  protected void activate(final ComponentContext ctx) throws Exception {
-    log.debug("Activating.");
-    final BundleContext bundleContext = ctx.getBundleContext();
-    tracker = new ServiceTracker(bundleContext, bundleContext.createFilter(String.format("(&(objectClass=%s)(!(%s=true))(%s=*))", JaxRSResource.class.getName(), JaxRSResourceConstants.PROPERTY_IGNORE_RESOURCE, JaxRSResourceConstants.PROPERTY_APPLICATION_PATH)), new JaxRSResourceServiceTracker(bundleContext, this));
-    tracker.open();
-  }
-
-  /**
-   * This method binds a new JaxRSResource to the application specified in its path service property.
-   * @param resource The new JaxRSResource to bind.
-   * @param reference The ServiceReference to pull registration properties from.
-   */
-  protected void bindResource(final JaxRSResource resource, final ServiceReference reference) {
+  @Override
+  public void bindResource(final JaxRSResource resource, final ServiceReference reference) {
     log.debug("Binding Resource: {}", resource);
 
     // Get application path.
@@ -78,25 +64,8 @@ public class JaxRSApplicationManagerImpl {
     refreshJerseyApplication(path, resources);
   }
 
-  /**
-   * Deactivates the component.
-   */
-  @Deactivate
-  protected void deactivate() {
-    log.debug("Deactivating.");
-    tracker.close();
-    for( final String path : resourceMap.keySet() ) {
-      unbindContext(path);
-    }
-    resourceMap.clear();
-  }
-
-  /**
-   * This method removes a JaxRSResource from the application specified in its path service property.
-   * @param resource The new JaxRSResource to remove.
-   * @param reference The ServiceReference to pull registration properties from.
-   */
-  protected void unbindResource(final JaxRSResource resource, final ServiceReference reference) {
+  @Override
+  public void unbindResource(final JaxRSResource resource, final ServiceReference reference) {
     log.debug("Unbinding Resource: {}", resource);
 
     // Get application path.
@@ -116,9 +85,33 @@ public class JaxRSApplicationManagerImpl {
   }
 
   /**
+   * Activates the component.
+   */
+  @Activate
+  protected void activate(final ComponentContext ctx) throws Exception {
+    log.debug("Activating.");
+    final BundleContext bundleContext = ctx.getBundleContext();
+    tracker = new ServiceTracker(bundleContext, bundleContext.createFilter(String.format("(&(objectClass=%s)(!(%s=true))(%s=*))", JaxRSResource.class.getName(), JaxRSResourceConstants.PROPERTY_IGNORE_RESOURCE, JaxRSResourceConstants.PROPERTY_APPLICATION_PATH)), new JaxRSResourceServiceTrackerCustomizer(bundleContext, this));
+    tracker.open();
+  }
+
+  /**
+   * Deactivates the component.
+   */
+  @Deactivate
+  protected void deactivate() {
+    log.debug("Deactivating.");
+    tracker.close();
+    for( final String path : resourceMap.keySet() ) {
+      unbindContext(path);
+    }
+    resourceMap.clear();
+  }
+
+  /**
    * Returns the JaxRSResources to build a Jersey Application out of for a given path.
    * @param path The context path to build an application for.
-   * @return The JaxRSResources to build a Jersey Application ut of for a given path.
+   * @return The JaxRSResources to build a Jersey Application out of for a given path.
    */
   private Set<JaxRSResource> getResources(final String path) {
     Set<JaxRSResource> set = resourceMap.get(path);
@@ -140,7 +133,7 @@ public class JaxRSApplicationManagerImpl {
       final JaxRSApplicationImpl application = new JaxRSApplicationImpl(path, httpService.createDefaultHttpContext(), resources, null);
       final ServletContainer container = new ServletContainer(application);
       httpService.registerServlet(path, container, application.getInitParams(), application.getHttpContext());
-    } catch (final Exception e) {
+    } catch( final Exception e ) {
       log.warn("Unable to refresh Jersey application at path " + path + ".", e);
     }
   }
@@ -152,9 +145,9 @@ public class JaxRSApplicationManagerImpl {
   private void unbindContext(final String path) {
     try {
       httpService.unregister(path);
-    } catch (final IllegalArgumentException iae) {
+    } catch( final IllegalArgumentException iae ) {
       log.debug("Unable to unbind path " + path + ".", iae);
-    } catch (final Exception e) {
+    } catch( final Exception e ) {
       log.warn("Unable to unbind path " + path + ".", e);
     }
   }

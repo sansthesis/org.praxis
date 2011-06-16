@@ -150,6 +150,20 @@
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-scr-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <configuration>
+          <instrumentation>
+            <ignores>
+              <ignore>org.praxis.jersey.JaxRSResourceConstants</ignore>
+            </ignores>
+            <excludes>
+              <exclude>**/*Constants.class</exclude>
+            </excludes>
+          </instrumentation>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
