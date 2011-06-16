@@ -13,6 +13,7 @@
   <packaging>bundle</packaging>
 
   <name>Praxis :: Jersey</name>
+  <description>This project contains utility classes and services for use with Jersey.</description>
 
   <scm>
     <connection>scm:git:https://github.com/jasonrose/org.praxis/org.praxis.jersey</connection>
@@ -35,7 +36,7 @@
       </dependency>
       <dependency>
         <groupId>com.sun.jersey</groupId>
-        <artifactId>jersey-json</artifactId>
+        <artifactId>jersey-core</artifactId>
         <version>1.6</version>
       </dependency>
       <dependency>
@@ -100,7 +101,7 @@
     </dependency>
     <dependency>
       <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-json</artifactId>
+      <artifactId>jersey-core</artifactId>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
