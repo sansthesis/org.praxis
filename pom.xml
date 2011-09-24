@@ -14,5 +14,6 @@
     <module>org.praxis.feature</module>
     <module>org.praxis.jersey</module>
     <module>org.praxis.template</module>
+    <module>org.praxis.http</module>
   </modules>
 </project>
