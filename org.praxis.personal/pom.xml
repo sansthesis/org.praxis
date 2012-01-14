@@ -14,4 +14,8 @@
   
   <name>Praxis - Personal</name>
   <description>These are projects for whatever.</description>
+  
+  <modules>
+    <module>org.praxis.personal.minifier</module>
+  </modules>
 </project>

@@ -17,5 +17,7 @@
   
   <modules>
     <module>org.praxis.poms.testing</module>
+    <module>org.praxis.poms.commons</module>
+    <module>org.praxis.poms.osgi</module>
   </modules>
 </project>
