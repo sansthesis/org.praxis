@@ -4,7 +4,7 @@
   <artifactId>praxis-parent-pom</artifactId>
   <packaging>pom</packaging>
   <name>Praxis :: Parent POM</name>
-  <version>1-SNAPSHOT</version>
+  <version>2-SNAPSHOT</version>
 
   <developers>
     <developer>
@@ -21,7 +21,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.6</java.version>
+    <java.version>1.7</java.version>
   </properties>
 
   <build>
