@@ -4,6 +4,7 @@
     <groupId>org.praxis</groupId>
     <artifactId>praxis-parent-pom</artifactId>
     <version>2-SNAPSHOT</version>
+    <relativePath>../parent-pom/pom.xml</relativePath>
   </parent>
   
   <groupId>org.praxis.poms</groupId>
