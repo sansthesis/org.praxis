@@ -16,12 +16,12 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AbstractCompressorImplTest {
+public class YUICompressorImplTest {
 
   private static final String CSS = "body%{%background-color : #b0c4de;%}%";
   private MapCacheServiceImpl cache;
 
-  private AbstractCompressorImpl service;
+  private YUICompressorImpl service;
 
   @After
   public void after() throws Exception {
@@ -34,7 +34,7 @@ public class AbstractCompressorImplTest {
   public void before() throws Exception {
     cache = new MapCacheServiceImpl();
     cache.activate();
-    service = new AbstractCompressorImpl(cache);
+    service = new YUICompressorImpl(cache);
   }
 
   @Test
@@ -56,31 +56,31 @@ public class AbstractCompressorImplTest {
   }
 
   @Test
-  public void testSimpleCombine() throws Exception {
-    service = new AbstractCompressorImpl(cache, true, false);
+  public void testMinifyCss() throws Exception {
+    service = new YUICompressorImpl(cache, true, true);
     final String file1 = createCssAt("foo");
     final String file2 = createCssAt("foo/bar");
     final String[] inputs = new String[] { file1, file2 };
     final List<URI> outputs = service.generateCompressedFiles("http://localhost/deep/", inputs);
     Assert.assertEquals(1, outputs.size());
     Assert.assertNotNull(outputs.get(0).toString());
-    Assert.assertEquals(createExpectedOutput(false, file1, file2), cache.get(outputs.get(0).toString()));
+    Assert.assertEquals(createExpectedOutput(true, file1, file2), cache.get(outputs.get(0).toString()));
   }
 
   @Test
-  public void testExternalCombine() throws Exception {
-    service = new AbstractCompressorImpl(cache, true, false);
-    final String file1 = createCssAt("foo");
-    final String file2 = createCssAt("foo/bar");
-    final String[] inputs = new String[] { file1, file2, "http://code.jquery.com/jquery-1.7.1.js" };
+  public void testMinifyJs() throws Exception {
+    service = new YUICompressorImpl(cache, true, true);
+    final String[] inputs = new String[] { "http://code.jquery.com/jquery-1.7.1.js" };
     final List<URI> outputs = service.generateCompressedFiles("http://localhost/deep/", inputs);
     Assert.assertEquals(1, outputs.size());
     Assert.assertNotNull(outputs.get(0).toString());
-    Assert.assertEquals(createExpectedOutput(false, inputs), cache.get(outputs.get(0).toString()));
+    final int inputLength = IOUtils.toString(new URI(inputs[0])).length();
+    final int outputLength = cache.get(outputs.get(0).toString()).length();
+    Assert.assertTrue(inputLength > outputLength);
   }
 
   private String createCssAt(final String path) throws Exception {
-    final File tmpFile = File.createTempFile(path.replace("/", "-"), null);
+    final File tmpFile = File.createTempFile(path.replace("/", "-"), ".css");
     FileUtils.writeLines(tmpFile, Arrays.asList(CSS.split("%")));
     return tmpFile.toURI().toString();
   }
@@ -91,12 +91,12 @@ public class AbstractCompressorImplTest {
       buffer.append("/*!" + url + "*/\n");
       String contents = IOUtils.toString(new URI(url));
       if( compress ) {
-        contents = contents.replaceAll("\\r|\\n", "");
+        contents = contents.replaceAll("\\s*", "");
+        contents = contents.replaceAll(";", "");
       }
       buffer.append(contents);
       buffer.append("\n");
     }
     return buffer.toString();
   }
-
 }

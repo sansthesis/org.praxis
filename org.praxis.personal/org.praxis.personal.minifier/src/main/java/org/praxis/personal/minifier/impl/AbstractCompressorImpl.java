@@ -54,11 +54,11 @@ public class AbstractCompressorImpl implements Compressor {
     try {
       final StringBuilder buffer = new StringBuilder();
       for( final String uri : uris ) {
-        buffer.append("/*" + uri + "*/\n");
+        buffer.append("/*!" + uri + "*/\n");
         if( !cache.containsKey(uri) ) {
           String contents = IOUtils.toString(new URI(uri));
           if( compressFiles ) {
-            contents = compress(contents);
+            contents = compress(uri, contents);
           }
           cache.put(uri, contents);
         }
@@ -73,7 +73,7 @@ public class AbstractCompressorImpl implements Compressor {
     }
   }
 
-  protected String compress(final String contents) {
+  protected String compress(final String uri, final String contents) {
     return contents;
   }
 
