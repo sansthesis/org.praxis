@@ -17,5 +17,6 @@
   
   <modules>
     <module>org.praxis.personal.minifier</module>
+    <module>org.praxis.personal.auth</module>
   </modules>
 </project>
