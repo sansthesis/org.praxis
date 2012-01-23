@@ -34,6 +34,11 @@
         <artifactId>commons-codec</artifactId>
         <version>1.6</version>
       </dependency>
+      <dependency>
+        <groupId>com.googlecode.guava-osgi</groupId>
+        <artifactId>guava-osgi</artifactId>
+        <version>11.0.0</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 </project>
