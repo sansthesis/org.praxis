@@ -11,6 +11,10 @@
   <name>Praxis - Personal - Auth</name>
   <description>This project contains services to handle application-agnostic authentication.</description>
   
+  <properties>
+    <java.version>1.6</java.version>
+  </properties>
+  
   <dependencyManagement>
     <dependencies>
       <!-- Commons -->
@@ -60,6 +64,10 @@
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.guava-osgi</groupId>
+      <artifactId>guava-osgi</artifactId>
     </dependency>
 
     <!-- OSGi -->
