@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features>
+  <feature name="{{artifactId}}" version="{{version}}">
+  {{#dependencies}}
+    <bundle>mvn:{{groupId}}/{{artifactId}}/{{version}}{{#hasType}}/{{type}}{{/hasType}}{{#hasClassifier}}/{{classifier}}{{/hasClassifier}}</bundle>
+  {{/dependencies}}
+  </feature>
+</features>

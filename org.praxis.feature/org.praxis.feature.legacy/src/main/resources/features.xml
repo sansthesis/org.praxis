@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="praxis-${project.version}">
+
+  <feature name="praxis" version="${project.version}">
+    <feature>jndi</feature>
+    <feature>jpa</feature>
+    <feature version="${project.version}">praxis-dependencies</feature>
+    <feature version="${project.version}">praxis-http</feature>
+    <feature version="${project.version}">praxis-openjpa</feature>
+    <feature version="${jersey.version}">jersey-bundles</feature>
+  </feature>
+
+  <feature name="praxis-dependencies" version="${project.version}">
+    <bundle>mvn:commons-collections/commons-collections/${commons-collections.version}</bundle>
+    <bundle>mvn:commons-io/commons-io/${commons-io.version}</bundle>
+    <bundle>mvn:commons-lang/commons-lang/${commons-lang.version}</bundle>
+    <bundle>mvn:commons-beanutils/commons-beanutils/${commons-beanutils.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.eventadmin/${org.apache.felix.eventadmin.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.scr/${org.apache.felix.scr.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.osgi.compendium/${osgi.version}</bundle>
+    <bundle>mvn:org.apache.servicemix.transaction/org.apache.servicemix.transaction/${org.apache.servicemix.transaction.version}</bundle>
+  </feature>
+
+  <feature name="praxis-http" version="${project.version}">
+    <bundle>mvn:org.apache.felix/org.apache.felix.metatype/${org.apache.felix.metatype.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.http.bundle/${org.apache.felix.http.bundle.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.http.jetty/${org.apache.felix.http.jetty.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.http.whiteboard/${org.apache.felix.http.whiteboard.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.webconsole/${org.apache.felix.webconsole.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.webconsole.plugins.event/${org.apache.felix.webconsole.plugins.event.version}</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.webconsole.plugins.memoryusage/${org.apache.felix.webconsole.plugins.memoryusage.version}</bundle>
+    <bundle>mvn:org.apache.karaf.webconsole/org.apache.karaf.webconsole.admin/${org.apache.karaf.webconsole.version}</bundle>
+    <bundle>mvn:org.apache.karaf.webconsole/org.apache.karaf.webconsole.gogo/${org.apache.karaf.webconsole.version}</bundle>
+    <bundle>mvn:org.apache.karaf.webconsole/org.apache.karaf.webconsole.features/${org.apache.karaf.webconsole.version}</bundle>
+  </feature>
+
+  <feature name="praxis-openjpa" version="${project.version}">
+    <bundle>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.activation-api-1.1/${activation-api.version}</bundle>
+    <bundle>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.jaxb-api-2.2/${jaxb-api.version}</bundle>
+    <bundle>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.stax-api-1.0/${stax-api.version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jaxb-impl/${jaxb-impl.version}</bundle>
+    <bundle>mvn:javax.persistence/com.springsource.javax.persistence/${javax.persistence.version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-pool/${commons-pool.version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-dbcp/${commons-dbcp.version}</bundle>
+    <bundle>mvn:net.sourceforge.serp/com.springsource.serp/${serp.version}</bundle>
+    <bundle>mvn:org.jboss.javassist/com.springsource.javassist/${javassist.version}</bundle>
+    <bundle>mvn:org.apache.openjpa/openjpa/${openjpa.version}</bundle>
+  </feature>
+
+  <feature name="jackson-bundles" version="${jackson.version}">
+    <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/${jackson.version}</bundle>
+    <bundle>mvn:org.codehaus.jackson/jackson-core-asl/${jackson.version}</bundle>
+    <bundle>mvn:org.codehaus.jackson/jackson-jaxrs/${jackson.version}</bundle>
+  </feature>
+
+  <feature name="jersey-bundles" version="${jersey.version}">
+    <feature version="${jackson.version}">jackson-bundles</feature>
+    <bundle>mvn:org.codehaus.jettison/jettison/${jettison.version}</bundle>
+    <bundle>mvn:com.sun.jersey/jersey-server/${jersey.version}</bundle>
+    <bundle>mvn:com.sun.jersey/jersey-core/${jersey.version}</bundle>
+    <bundle>mvn:com.sun.jersey/jersey-json/${jersey.version}</bundle>
+  </feature>
+</features>

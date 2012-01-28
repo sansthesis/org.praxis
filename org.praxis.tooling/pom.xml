@@ -6,16 +6,14 @@
     <version>2-SNAPSHOT</version>
     <relativePath>../parent-pom/pom.xml</relativePath>
   </parent>
-
-  <groupId>org.praxis.feature</groupId>
-  <artifactId>org.praxis.feature</artifactId>
+  
+  <groupId>org.praxis.tooling</groupId>
+  <artifactId>org.praxis.tooling</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-
-  <name>Praxis - Features</name>
-
+  
+  <name>Praxis - Tooling</name>
   <modules>
-    <module>org.praxis.feature.legacy</module>
-    <module>org.praxis.feature.common</module>
+    <module>org.praxis.tooling.features-maven-plugin</module>
   </modules>
 </project>
