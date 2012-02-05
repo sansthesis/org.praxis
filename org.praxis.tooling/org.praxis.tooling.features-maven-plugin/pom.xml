@@ -11,7 +11,7 @@
   <packaging>maven-plugin</packaging>
   
   <properties>
-    <mavenVersion>2.0</mavenVersion>
+    <mavenVersion>2.2.1</mavenVersion>
   </properties>
 
   <dependencies>
@@ -54,7 +54,7 @@
     <dependency>
       <groupId>com.googlecode.guava-osgi</groupId>
       <artifactId>guava-osgi</artifactId>
-      <version>11.0.0</version>
+      <version>11.0.1</version>
     </dependency>
 
     <dependency>
