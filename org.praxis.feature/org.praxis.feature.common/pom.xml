@@ -10,6 +10,8 @@
   <artifactId>org.praxis.feature.common</artifactId>
   <packaging>pom</packaging>
 
+  <name>Praxis - Features - Common</name>
+
   <dependencyManagement>
     <dependencies>
       <!-- Commons -->
@@ -44,57 +46,43 @@
       <groupId>com.googlecode.guava-osgi</groupId>
       <artifactId>guava-osgi</artifactId>
     </dependency>
-    
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.1</version>
-      <scope>test</scope>
-    </dependency>
-    
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.4</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.praxis.feature</groupId>
-      <artifactId>org.praxis.feature.legacy</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-      <type>xml</type>
-      <classifier>features</classifier>
-    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- <plugin> -->
-      <!-- <groupId>org.apache.karaf.tooling</groupId> -->
-      <!-- <artifactId>features-maven-plugin</artifactId> -->
-      <!-- <version>2.2.5</version> -->
-      <!-- <executions> -->
-      <!-- <execution> -->
-      <!-- <id>generate</id> -->
-      <!-- <phase>generate-resources</phase> -->
-      <!-- <goals> -->
-      <!-- <goal>generate-features-xml</goal> -->
-      <!-- </goals> -->
-      <!-- </execution> -->
-      <!-- </executions> -->
-      <!-- </plugin> -->
       <plugin>
         <groupId>org.praxis.tooling</groupId>
         <artifactId>org.praxis.tooling.features-maven-plugin</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <executions>
           <execution>
-            <id>sayhi</id>
+            <id>generate-feature</id>
             <phase>generate-resources</phase>
             <goals>
               <goal>generate-features-xml</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-feature.xml</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artiafct>
+                  <file>${project.build.outputDirectory}/feature.xml</file>
+                  <type>xml</type>
+                  <classifier>features</classifier>
+                </artiafct>
+              </artifacts>
+            </configuration>
           </execution>
         </executions>
       </plugin>
